@@ -10,8 +10,9 @@ The easiest way to use this is to add it to your "Send To" menu. This lets you s
 1. Download this folder to your computer.
 2. Open the folder.
 3. Right-click on `manage_context_menu.ps1` and select **Run with PowerShell**.
-4. A standard blue window will appear. It might ask for permission or just close quickly.
-   - If it effectively vanishes or says "Shortcut created", you are good to go!
+4. A blue window will open and ask for an **Action**. 
+   - Type `Install` and press **Enter**.
+5. It should say "Shortcut created". You are good to go!
 
 ### 2. Installing Games/DLCs
 1. Go to your GOG game folder (where you downloaded all the `.exe` files).
@@ -26,8 +27,8 @@ The easiest way to use this is to add it to your "Send To" menu. This lets you s
 If you don't want the "Send to" option anymore:
 1. Open this folder again.
 2. Right-click `manage_context_menu.ps1` and select **Run with PowerShell**.
-3. It keeps the shortcut installed if it exists, or removes it if you run it with specific commands. 
-   - *Advanced*: Open PowerShell here and run `.\manage_context_menu.ps1 -Action Uninstall` to remove it cleanly.
+3. When it asks for **Action**, type `Uninstall` and press **Enter**.
+4. It will remove the shortcut.
 
 ---
 
