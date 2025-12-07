@@ -1,66 +1,46 @@
-# GOG DLC Silent Installer Script
+# GOG DLC Silent Installer
 
-This PowerShell script (`install_gog_dlc.ps1`) automates the installation of multiple GOG DLC installers from a specific directory. It uses standard silent installation flags to avoid wizard prompts and manual interaction.
+This tool helps you install multiple GOG DLCs at once without clicking "Next" hundreds of times.
 
-## Features
+## How to use (The Easy Way)
 
-*   **Silent Installation:** Runs installers in the background with `/VERYSILENT`, `/NORESTART`, and other standard flags.
-*   **Batch Processing:** Scans a directory for matching files and runs them sequentially.
-*   **Filtering:** Supports `Include` and `Exclude` wildcards to target specific files (e.g., install all DLCs but skip the main game installer).
+The easiest way to use this is to add it to your "Send To" menu. This lets you select files in Explorer and install them with one click.
 
-## Usage
+### 1. Setup (Do this once)
+1. Download this folder to your computer.
+2. Open the folder.
+3. Right-click on `manage_context_menu.ps1` and select **Run with PowerShell**.
+4. A standard blue window will appear. It might ask for permission or just close quickly.
+   - If it effectively vanishes or says "Shortcut created", you are good to go!
 
-Run the script from PowerShell, providing the `-SourcePath` argument at a minimum.
+### 2. Installing Games/DLCs
+1. Go to your GOG game folder (where you downloaded all the `.exe` files).
+2. Select all the DLC installer files you want to install.
+   - **Tip**: You can click one, hold `Shift`, and click the last one to select a range. Or hold `Ctrl` to select specific ones.
+3. **Right-click** on the selected files.
+4. Move your mouse to **Send to** -> **GOG Silent Installer**.
+5. A window will pop up and start installing them one by one.
+6. Sit back and relax. It will tell you when it's done.
 
-```powershell
-.\install_gog_dlc.ps1 -SourcePath "Path\To\Installers" [options]
-```
+### 3. Uninstalling the shortcut
+If you don't want the "Send to" option anymore:
+1. Open this folder again.
+2. Right-click `manage_context_menu.ps1` and select **Run with PowerShell**.
+3. It keeps the shortcut installed if it exists, or removes it if you run it with specific commands. 
+   - *Advanced*: Open PowerShell here and run `.\manage_context_menu.ps1 -Action Uninstall` to remove it cleanly.
 
-### Parameters
+---
 
-| Parameter | Application | Default | Description |
-| :--- | :--- | :--- | :--- |
-| **`-SourcePath`** | **Required** | N/A | Full path to the directory containing the installer `.exe` files. |
-| **`-Include`** | Optional | `setup_*.exe` | Wildcard pattern to match files to install. |
-| **`-Exclude`** | Optional | `""` | Wildcard pattern to **skip** files (e.g., exclude base game). |
+## (Advanced) Using via Command Line
 
-## Examples
-
-### 1. Basic Installation (Install Everything)
-Installs all files matching `setup_*.exe` in the folder.
-
-```powershell
-.\install_gog_dlc.ps1 -SourcePath "D:\Downloads\Games\Stellaris\DLCs"
-```
-
-### 2. Exclude Base Game (Common Scenario)
-If the folder contains both the base game (often labeled with `64bit` or `v1.0`) and DLCs, use `-Exclude` to skip the game installer.
-
-```powershell
-.\install_gog_dlc.ps1 -SourcePath "D:\Downloads\Games\Age of Wonders 4" -Exclude "*64bit*"
-```
-
-### 3. Custom File Pattern
-If the installers have a different naming convention.
+If you prefer using the command line (Terminal / PowerShell), you can use the script directly.
 
 ```powershell
-.\install_gog_dlc.ps1 -SourcePath "D:\Downloads\Games\Wartales" -Include "*.exe"
+.\install_gog_dlc.ps1 -SourcePath "D:\Games\MyGame"
 ```
 
-### 4. Complex Exclusion
-Exclude multiple types of files (Note: PowerShell wildcards are simple, for complex regex you might need to modify the script, but `*` covers most cases).
+This will automatically find all `setup_*.exe` files in that folder and install them.
 
-```powershell
-# Excludes any file containing "Patch" OR "Update"
-.\install_gog_dlc.ps1 -SourcePath "..." -Exclude "*Patch*" 
-```
-
-## Technical Details
-
-The script executes the installers with the following arguments:
-*   `/VERYSILENT`: No progress window.
-*   `/NORESTART`: Prevents auto-reboot.
-*   `/SP-`: Skips startup confirmation.
-*   `/SUPPRESSMSGBOXES`: Answers default to all warnings (e.g., Overwrite).
-
-If you experience issues with a specific game, you can edit the `$installArgs` variable in the script to change these flags (e.g., use `/SILENT` instead of `/VERYSILENT` to see a progress bar).
+### Options
+- `-SourcePath "..."`: The folder to scan.
+- `-Exclude "*patch*"`: Skip files with this name (e.g., skip patches or base game).
